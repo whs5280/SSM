@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace指定接口-->
+<mapper namespace="com.smart.dao.UploadDao">
+
+    <!-- 为了返回list 类型而定义的returnMap -->
+    <resultMap type="Pic" id="resultPic">
+        <id column="id" property="id" />
+        <result column="comEmail" property="comEmail" />
+        <result column="pic" property="pic" />
+        <result column="mark" property="mark" />
+        <result column="state" property="state" />
+    </resultMap>
+
+    <!-- 增加勤工记录 -->
+    <insert id="picAdd" parameterType="Pic">
+        insert into pic(comEmail,pic,mark,state)
+        values (#{comEmail},#{pic},#{mark},"审核")
+    </insert>
+
+    <!-- 显示勤工助学记录 -->
+    <select id="showPicByEmail" parameterType="String" resultMap="resultPic">
+        select * from pic
+        where comEmail = #{comEmail} and state != "删除"
+    </select>
+
+    <!-- 所有勤工助学记录 -->
+    <select id="showPic" parameterType="Pic" resultType="Pic">
+        select * from pic p
+        <where>
+            <if test="state!=null and state!=''">
+                p.state=#{state}
+            </if>
+        </where>
+    </select>
+
+    <!-- 给予通过 -->
+    <update id="passPic" parameterType="int">
+        update pic
+        set state = "通过"
+        where id = #{id}
+    </update>
+
+    <!-- 给予不通过 -->
+    <update id="dispassPic" parameterType="int">
+        update pic
+        set state = "未通过"
+        where id = #{id}
+    </update>
+
+</mapper>

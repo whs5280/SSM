@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace指定接口-->
+<mapper namespace="com.smart.dao.CollectDao">
+
+    <!-- 为了返回list 类型而定义的returnMap -->
+    <resultMap type="Collect" id="resultCollect">
+        <id column="cid" property="cid" />
+        <result column="stuEmail" property="stuEmail" />
+        <result column="resumeId" property="resumeId" />
+    </resultMap>
+    <!-- 复合类型  -->
+    <resultMap type="Collect" id="resultCollectWith">
+        <id column="cid" property="cid" />
+        <result column="stuEmail" property="stuEmail" />
+        <result column="resumeId" property="resumeId" />
+        <!-- Resume字段的封装 -->
+        <association property="resume" javaType="com.smart.bean.Resume">
+            <id column="id" property="id" />
+            <result column="jobType" property="jobType" />
+            <result column="jobName" property="jobName" />
+            <result column="department" property="department" />
+            <result column="number" property="number" />
+            <result column="deRequest" property="deRequest" />
+            <result column="salary" property="salary" />
+            <result column="detail" property="detail" />
+            <result column="time" property="time" />
+            <result column="state" property="state" />
+        </association>
+    </resultMap>
+
+    <!--增加收藏-->
+    <insert id="CollectAdd" parameterType="Collect">
+        insert into collect(stuEmail,resumeId)
+        values (#{stuEmail},#{resumeId})
+    </insert>
+
+    <!--显示收藏-->
+    <select id="showCollect" parameterType="String" resultMap="resultCollectWith">
+        select *
+        from collect c , resume r
+        where c.resumeId = r.id and stuEmail = #{stuEmail}
+    </select>
+
+    <!--删除收藏-->
+    <delete id="CollectDel" parameterType="int">
+        delete from collect
+        where cid = #{cid}
+    </delete>
+</mapper>
