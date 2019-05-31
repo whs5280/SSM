@@ -3,7 +3,8 @@
 该系统采用SSM框架技术，为学生兼职与企业招聘提供各项服务，实现了简历投递、岗位发布、求职管理、数据统计等功能。
 
 ![首页](img/4.png)
-![登录注册](public/media/pay.gif)
-![岗位发布](public/media/map_center.png)
-![简历审核](public/media/score.png)
+![登录注册](img/1.png)
+![简历信息](img/2.png)
+![招聘信息](img/3.png)
+![招聘信息](img/5.png)
 
